@@ -450,6 +450,11 @@ QString TextDocument::tooltip(const QPoint& point) const
     return QString();
 }
 
+void TextDocument::setHightLightWords(const QStringList& words)
+{
+    d.highlightWords = words;
+}
+
 void TextDocument::updateBlock(int number)
 {
     if (d.visible) {
@@ -529,8 +534,16 @@ void TextDocument::receiveMessage(IrcMessage* message)
                         content = nm->content();
                         priv = nm->isPrivate();
                     }
+
                     IrcConnection* connection = message->connection();
-                    const bool contains = content.contains(connection->nickName(), Qt::CaseInsensitive);
+                    QStringList highlightList;
+                    highlightList << d.highlightWords << connection->nickName();
+                    QStringList::const_iterator iter;
+                    bool contains = false;
+                    for (iter = highlightList.constBegin(); iter != highlightList.constEnd(); iter++) {
+                        if ((contains = content.contains(*iter, Qt::CaseInsensitive)))
+                            break;
+                    }
                     if (contains) {
                         if (connection->isConnected())
                             addHighlight(totalCount() - 1);

@@ -47,6 +47,7 @@ public slots:
     void setTheme(const QString& theme);
     void setLoggingEnabled(bool enabled);
     void setLoggingLocation(const QString &location);
+    void setHighlightField(const QString highlightWords);
 
 signals:
     void accepted();

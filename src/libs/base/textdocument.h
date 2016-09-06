@@ -74,7 +74,7 @@ public:
     void drawForeground(QPainter* painter, const QRect& bounds);
 
     QString tooltip(const QPoint& pos) const;
-
+    void setHightLightWords(const QStringList& words);
 public slots:
     void reset();
     void lowlight(int block = -1);
@@ -124,6 +124,7 @@ private:
         QString timeStampFormat;
         QList<MessageData> queue;
         MessageFormatter* formatter;
+        QStringList highlightWords;
     } d;
 };
 
