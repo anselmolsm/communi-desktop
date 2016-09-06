@@ -33,6 +33,7 @@
 #include "themeinfo.h"
 #include <QPushButton>
 #include <QScrollBar>
+#include <QSettings>
 #include <QShortcut>
 
 SettingsPage::SettingsPage(QWidget* parent) : QWidget(parent)
@@ -43,6 +44,9 @@ SettingsPage::SettingsPage(QWidget* parent) : QWidget(parent)
     ui.iconLabel->setPixmap(QIcon(":/communi-64.png").pixmap(64, 64));
     ui.scrollArea->horizontalScrollBar()->setStyle(ScrollBarStyle::narrow());
     ui.scrollArea->verticalScrollBar()->setStyle(ScrollBarStyle::narrow());
+
+    QSettings settings;
+    ui.highlightField->setText(settings.value("highlightField").toStringList().join(","));
 
     connect(ui.buttonBox, SIGNAL(accepted()), this, SIGNAL(accepted()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SIGNAL(rejected()));
@@ -58,6 +62,8 @@ SettingsPage::SettingsPage(QWidget* parent) : QWidget(parent)
         ui.themeCombo->addItem(theme.name());
     }
     connect(ui.themeCombo, SIGNAL(currentTextChanged(QString)), this, SLOT(setTheme(QString)));
+
+    connect(ui.highlightField, SIGNAL(textEdited(QString)), this, SLOT(setHighlightField(QString)));
 }
 
 SettingsPage::~SettingsPage()
@@ -93,4 +99,11 @@ QString SettingsPage::loggingLocation() const {
 
 void SettingsPage::setLoggingLocation(const QString &location) {
     ui.loggingLocationLineEdit->setText(location);
+}
+
+void SettingsPage::setHighlightField(const QString highlightWords)
+{
+    QSettings settings;
+    settings.setValue("highlightField", highlightWords.split(","));
+    settings.sync();
 }

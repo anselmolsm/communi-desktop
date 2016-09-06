@@ -355,6 +355,9 @@ void ChatPage::addBuffer(IrcBuffer* buffer)
     TextDocument* doc = new TextDocument(buffer);
     buffer->setPersistent(true);
 
+    QSettings settings;
+    doc->setHightLightWords(settings.value("highlightField").toStringList());
+
     d.treeWidget->addBuffer(buffer);
     d.splitView->addBuffer(buffer);
 

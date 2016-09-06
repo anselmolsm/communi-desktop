@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>536</width>
-    <height>688</height>
+    <width>611</width>
+    <height>791</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -61,8 +61,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>518</width>
-        <height>520</height>
+        <width>589</width>
+        <height>610</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -91,7 +91,7 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <spacer name="bottomSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -224,7 +224,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Logging</string>
+          <string>&amp;Logging</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -241,7 +241,7 @@
             <x>9</x>
             <y>30</y>
             <width>421</width>
-            <height>31</height>
+            <height>32</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="loggingLayout">
@@ -288,6 +288,29 @@
             </widget>
            </item>
           </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Highlight</string>
+         </property>
+         <widget class="QLineEdit" name="highlightField">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>40</y>
+            <width>113</width>
+            <height>30</height>
+           </rect>
+          </property>
          </widget>
         </widget>
        </item>
