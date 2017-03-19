@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>ConnectPage</class>
  <widget class="QWidget" name="ConnectPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1363</width>
+    <height>1026</height>
+   </rect>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="titleLayout">
@@ -49,6 +57,14 @@
       <bool>true</bool>
      </property>
      <widget class="QWidget" name="container">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1341</width>
+        <height>847</height>
+       </rect>
+      </property>
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -78,7 +94,7 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QWidget" name="leftSpacer" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -88,147 +104,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QGroupBox" name="connectionBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-           <horstretch>3</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>Connection</string>
-         </property>
-         <layout class="QFormLayout" name="connectionLayout">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="displayNameLabel">
-            <property name="text">
-             <string>&amp;Name:</string>
-            </property>
-            <property name="buddy">
-             <cstring>displayNameField</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="displayNameField">
-            <property name="placeholderText">
-             <string>Freenode</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="hostLabel">
-            <property name="text">
-             <string>&amp;Host:</string>
-            </property>
-            <property name="buddy">
-             <cstring>hostField</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="hostField">
-            <property name="inputMethodHints">
-             <set>Qt::ImhUrlCharactersOnly</set>
-            </property>
-            <property name="placeholderText">
-             <string>irc.freenode.net</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="portLabel">
-            <property name="text">
-             <string>&amp;Port:</string>
-            </property>
-            <property name="buddy">
-             <cstring>portField</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <layout class="QHBoxLayout" name="portLayout">
-            <item>
-             <widget class="QSpinBox" name="portField">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>1</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>65535</number>
-              </property>
-              <property name="value">
-               <number>6667</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="secureBox">
-              <property name="text">
-               <string>&amp;Secure</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="expandButton">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextOnly</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="serverLabel">
-            <property name="text">
-             <string>&amp;Alternates:</string>
-            </property>
-            <property name="buddy">
-             <cstring>serverField</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QPlainTextEdit" name="serverField">
-            <property name="verticalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="tabChangesFocus">
-             <bool>true</bool>
-            </property>
-            <property name="lineWrapMode">
-             <enum>QPlainTextEdit::NoWrap</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="2">
+       <item row="2" column="2">
         <widget class="QWidget" name="rightSpacer" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -238,7 +114,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QGroupBox" name="identityBox">
          <property name="title">
           <string>Identity</string>
@@ -250,7 +126,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="nickNameLabel">
             <property name="text">
-             <string>&amp;Nick names:</string>
+             <string>Nick na&amp;mes:</string>
             </property>
             <property name="buddy">
              <cstring>nickNameField</cstring>
@@ -338,7 +214,7 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <spacer name="bottomSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -350,6 +226,157 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="connectionBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>3</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Connection</string>
+         </property>
+         <layout class="QFormLayout" name="connectionLayout">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="displayNameLabel">
+            <property name="text">
+             <string>&amp;Name:</string>
+            </property>
+            <property name="buddy">
+             <cstring>displayNameField</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="displayNameField">
+            <property name="placeholderText">
+             <string>Freenode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLineEdit" name="hostField">
+              <property name="inputMethodHints">
+               <set>Qt::ImhUrlCharactersOnly</set>
+              </property>
+              <property name="placeholderText">
+               <string>irc.freenode.net</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="bypassBox">
+              <property name="text">
+               <string>Bypass proxy</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="portLabel">
+            <property name="text">
+             <string>&amp;Port:</string>
+            </property>
+            <property name="buddy">
+             <cstring>portField</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <layout class="QHBoxLayout" name="portLayout">
+            <item>
+             <widget class="QSpinBox" name="portField">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>65535</number>
+              </property>
+              <property name="value">
+               <number>6667</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="secureBox">
+              <property name="text">
+               <string>&amp;Secure</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="expandButton">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextOnly</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="serverLabel">
+            <property name="text">
+             <string>A&amp;lternates:</string>
+            </property>
+            <property name="buddy">
+             <cstring>serverField</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPlainTextEdit" name="serverField">
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="tabChangesFocus">
+             <bool>true</bool>
+            </property>
+            <property name="lineWrapMode">
+             <enum>QPlainTextEdit::NoWrap</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="hostLabel">
+            <property name="text">
+             <string>&amp;Host:</string>
+            </property>
+            <property name="buddy">
+             <cstring>hostField</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -379,7 +406,6 @@
  </widget>
  <tabstops>
   <tabstop>displayNameField</tabstop>
-  <tabstop>hostField</tabstop>
   <tabstop>portField</tabstop>
   <tabstop>secureBox</tabstop>
   <tabstop>expandButton</tabstop>

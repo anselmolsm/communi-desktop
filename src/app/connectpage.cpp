@@ -90,13 +90,17 @@ QStringList ConnectPage::servers() const
         port.prepend("+");
 
     QStringList servers = splitLines(ui.serverField->toPlainText());
-    servers.prepend(host + " " + port);
+    if (ui.bypassBox->isChecked())
+        servers.prepend("%"+ host + " " + port);
+    else
+        servers.prepend(host + " " + port);
     return servers;
 }
 
 void ConnectPage::setServers(const QStringList& servers)
 {
     ui.hostField->clear();
+    ui.bypassBox->setChecked(false);
     ui.portField->setValue(NORMAL_PORTS[0]);
     ui.secureBox->setChecked(false);
     ui.serverField->clear();
@@ -105,7 +109,8 @@ void ConnectPage::setServers(const QStringList& servers)
         QString server = servers.at(i);
         if (i == 0) {
             QStringList values = server.split(" ", QString::SkipEmptyParts);
-            ui.hostField->setText(values.value(0));
+            ui.bypassBox->setChecked(values.at(0).startsWith("%"));
+            ui.hostField->setText(values.value(0).remove('%'));
             if (values.count() > 1) {
                 ui.portField->setValue(values.at(1).toInt());
                 ui.secureBox->setChecked(values.at(1).startsWith("+"));
@@ -198,6 +203,8 @@ void ConnectPage::autoFill()
     if (!displayName.isEmpty()) {
         if (ui.hostField->text().isEmpty())
             ui.hostField->setText(defaultValue("hosts", displayName).toString());
+        if (ui.bypassBox->isChecked())
+            ui.bypassBox->setChecked(defaultValue("bypasses", displayName, false).toBool());
         if (ui.portField->value() == NORMAL_PORTS[0])
             ui.portField->setValue(defaultValue("ports", displayName, NORMAL_PORTS[0]).toInt());
         if (!ui.secureBox->isChecked())
@@ -259,6 +266,7 @@ void ConnectPage::saveSettings()
 {
     const QString displayName = ui.displayNameField->text();
     const QString host = ui.hostField->text();
+    const bool bypass = ui.bypassBox->isChecked();
     const int port = ui.portField->value();
     const bool secure = ui.secureBox->isChecked();
     const QString server = ui.serverField->toPlainText();
@@ -301,6 +309,10 @@ void ConnectPage::saveSettings()
     QMap<QString, QVariant> ports = credentials.value("ports").toMap();
     ports.insert(ConnectPage::displayName(), port);
     credentials.insert("ports", ports);
+
+    QMap<QString, QVariant> bypasses = credentials.value("bypasses").toMap();
+    bypasses.insert(ConnectPage::displayName(), bypass);
+    credentials.insert("bypasses", bypasses);
 
     QMap<QString, QVariant> secures = credentials.value("secures").toMap();
     secures.insert(ConnectPage::displayName(), secure);
@@ -379,6 +391,7 @@ void ConnectPage::reset()
 {
     ui.displayNameField->clear();
     ui.hostField->clear();
+    ui.bypassBox->setChecked(false);
     ui.portField->setValue(NORMAL_PORTS[0]);
     ui.secureBox->setChecked(false);
     ui.serverField->clear();
@@ -472,6 +485,7 @@ void ConnectPage::init(IrcConnection *connection)
 
     connect(ui.displayNameField, SIGNAL(textChanged(QString)), this, SLOT(updateUi()));
     connect(ui.hostField, SIGNAL(textChanged(QString)), this, SLOT(updateUi()));
+    connect(ui.bypassBox, SIGNAL(toggled(bool)), this, SLOT(updateUi()));
     connect(ui.serverField, SIGNAL(textChanged()), this, SLOT(updateUi()));
     connect(ui.nickNameField, SIGNAL(textChanged()), this, SLOT(updateUi()));
     connect(ui.realNameField, SIGNAL(textChanged(QString)), this, SLOT(updateUi()));
