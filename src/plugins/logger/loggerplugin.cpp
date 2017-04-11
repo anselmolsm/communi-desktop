@@ -57,14 +57,26 @@ LoggerPlugin::~LoggerPlugin()
 
 void LoggerPlugin::bufferAdded(IrcBuffer* buffer)
 {
+    QFile *f = m_logs.value(logFileName(buffer), new QFile(this));
+
+    if (f->fileName().isEmpty()) {
+        f->setFileName(m_logDirPath + logFileName(buffer));
+        f->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+
+        m_logs.insert(logFileName(buffer), f);
+        QTextStream ts(f);
+        ts << "Created: ============== " + formatTimestamp() + " ==============" << endl;
+    }
+
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(logMessage(IrcMessage*)));
 }
 
 void LoggerPlugin::bufferRemoved(IrcBuffer* buffer)
 {
     disconnect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(logMessage(IrcMessage*)));
-    QString file(buffer->network()->name() + "_" + buffer->title());
-    QFile *f = m_logs.take(file);
+    QFile *f = m_logs.take(logFileName(buffer));
+    QTextStream ts(f);
+    ts << "Closed: ============== " + formatTimestamp() + " ==============" << endl;
     if (f)
         f->close();
 }
@@ -75,19 +87,9 @@ void LoggerPlugin::logMessage(IrcMessage *message)
         return;
 
     IrcPrivateMessage *m = static_cast<IrcPrivateMessage*>(message);
-    QFile *f = m_logs.value(logFileName(m), new QFile(this));
-
-    if (f->fileName().isEmpty()) {
-        f->setFileName(m_logDirPath+logFileName(m));
-        f->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-
-        m_logs.insert(logFileName(m), f);
-        QTextStream ts(f);
-        ts << "============== " + formatTimestamp(m) + " ==============" << endl;
-    }
-
+    QFile *f = m_logs.value(logFileName(m));
     QTextStream ts(f);
-    ts << formatTimestamp(m) + " " + m->nick() + ": " + m->content() << endl;
+    ts << formatTimestamp() + " " + m->nick() + ": " + m->content() << endl;
 }
 
 QString LoggerPlugin::logFileName(IrcPrivateMessage *message) const
@@ -96,7 +98,12 @@ QString LoggerPlugin::logFileName(IrcPrivateMessage *message) const
                                 : message->network()->name() + "_" + message->target();
 }
 
-QString LoggerPlugin::formatTimestamp(IrcPrivateMessage *message) const
+QString LoggerPlugin::logFileName(IrcBuffer *buffer) const
 {
-    return message->timeStamp().toString("[yyyy-MM-dd] hh:mm:ss");
+    return buffer->network()->name() + "_" + buffer->name();
+}
+
+QString LoggerPlugin::formatTimestamp() const
+{
+    return QDateTime::currentDateTime().toString("[yyyy-MM-dd] hh:mm:ss");
 }
