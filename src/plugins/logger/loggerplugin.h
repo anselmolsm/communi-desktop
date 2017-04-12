@@ -53,9 +53,9 @@ public:
 private slots:
     void logMessage(IrcMessage *message);
 private:
-    QString logFileName(IrcPrivateMessage *message) const;
-    QString logFileName(IrcBuffer *buffer) const;
-    QString formatTimestamp() const;
+    QString logfileName(IrcPrivateMessage *message) const;
+    QString logfileName(IrcBuffer *buffer) const;
+    QString timestamp() const;
 
     QHash<QString, QFile*> m_logs;
     QString m_logDirPath;
