@@ -97,14 +97,14 @@ void LoggerPlugin::logMessage(IrcMessage *message)
 
 QString LoggerPlugin::logfileName(IrcPrivateMessage *message) const
 {
-    return message->isPrivate() ? message->network()->name() + "_" + message->nick()
-                                : message->network()->name() + "_" + message->target();
+    return message->isPrivate() ? message->network()->name() + "_" + message->nick() + ".log"
+                                : message->network()->name() + "_" + message->target() + ".log";
 }
 
 QString LoggerPlugin::logfileName(IrcBuffer *buffer) const
 {
-    const QString prefix = buffer->isChannel() ? "_#" : "_";
-    return buffer->network()->name() + prefix + buffer->name();
+    return buffer->isChannel() ? buffer->network()->name() + "_#" + buffer->name() + ".log"
+                               : buffer->network()->name() + "_" + buffer->name() + ".log";
 }
 
 QString LoggerPlugin::timestamp() const
