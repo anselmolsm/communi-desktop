@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2008-2016 The Communi Project
+  Copyright (C) 2008-2017 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -29,7 +29,7 @@
 #ifndef LOGGERPLUGIN_H
 #define LOGGERPLUGIN_H
 
-#include <QSet>
+#include <QFile>
 #include <QtPlugin>
 #include <IrcMessageFilter>
 #include "bufferplugin.h"
@@ -53,11 +53,12 @@ public:
 private slots:
     void logMessage(IrcMessage *message);
 private:
+    void writeToFile(const QString &fileName, const QString &text);
     QString logfileName(IrcPrivateMessage *message) const;
     QString logfileName(IrcBuffer *buffer) const;
     QString timestamp() const;
 
-    QHash<QString, QFile*> m_logs;
+    QFile m_logfile;
     QString m_logDirPath;
 };
 

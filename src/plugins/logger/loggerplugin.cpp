@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2008-2016 The Communi Project
+  Copyright (C) 2008-2017 The Communi Project
 
   You may use this file under the terms of BSD license as follows:
 
@@ -34,9 +34,7 @@
 #include <IrcChannel>
 #include <Irc>
 #include <QDir>
-#include <QFile>
 #include <QTextStream>
-#include <QString>
 
 LoggerPlugin::LoggerPlugin(QObject* parent) : QObject(parent)
     , m_logDirPath(QDir::homePath()+"/communilogs/")
@@ -48,30 +46,16 @@ LoggerPlugin::LoggerPlugin(QObject* parent) : QObject(parent)
 
 LoggerPlugin::~LoggerPlugin()
 {
-    QStringList filenames = m_logs.keys();
-    foreach(const QString &filename, filenames) {
-        QFile *f = m_logs.take(filename);
-        f->close();
-    }
 }
 
 void LoggerPlugin::bufferAdded(IrcBuffer* buffer)
 {
-    // Do not log network buffer
+    // Do not log connection buffer
     if (buffer->network()->name().isEmpty())
         return;
 
     const QString filename = logfileName(buffer);
-    QFile *f = m_logs.value(filename, new QFile(this));
-
-    if (f->fileName().isEmpty()) {
-        f->setFileName(m_logDirPath + filename);
-        f->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-
-        m_logs.insert(filename, f);
-        QTextStream ts(f);
-        ts << "=== Logfile started on " + timestamp() + " ===" << endl;
-    }
+    writeToFile(filename, "=== Logfile started on " + timestamp() + " ===");
 
     connect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(logMessage(IrcMessage*)));
 }
@@ -79,9 +63,6 @@ void LoggerPlugin::bufferAdded(IrcBuffer* buffer)
 void LoggerPlugin::bufferRemoved(IrcBuffer* buffer)
 {
     disconnect(buffer, SIGNAL(messageReceived(IrcMessage*)), this, SLOT(logMessage(IrcMessage*)));
-    QFile *f = m_logs.take(logfileName(buffer));
-    if (f)
-        f->close();
 }
 
 void LoggerPlugin::logMessage(IrcMessage *message)
@@ -90,9 +71,19 @@ void LoggerPlugin::logMessage(IrcMessage *message)
         return;
 
     IrcPrivateMessage *m = static_cast<IrcPrivateMessage*>(message);
-    QFile *f = m_logs.value(logfileName(m));
-    QTextStream ts(f);
-    ts << timestamp() + " " + m->nick() + ": " + m->content() << endl;
+    const QString filename = logfileName(m);
+    writeToFile(filename , timestamp() + " " + m->nick() + ": " + m->content());
+}
+
+void LoggerPlugin::writeToFile(const QString &fileName, const QString &text)
+{
+    m_logfile.setFileName(m_logDirPath + fileName);
+    m_logfile.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+
+    QTextStream ts(&m_logfile);
+    ts << text << endl;
+
+    m_logfile.close();
 }
 
 QString LoggerPlugin::logfileName(IrcPrivateMessage *message) const
